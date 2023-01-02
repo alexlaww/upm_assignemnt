@@ -1,4 +1,55 @@
-<html class="fontawesome-i2svg-active fontawesome-i2svg-complete" lang="en"><head>
+       <?php
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "putrablast_attendance";
+$false="";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Create connection
+//$conn = new mysqli($servername, $username, $password);
+
+// Check connection
+if ($conn->connect_error) {
+die("Connection failed: " . $conn->connect_error);
+}
+if(isset($_POST['submit'])){
+
+$username=$_POST['username'];
+$sql = "SELECT * FROM student WHERE student_matrix='".$username."'";
+
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+// output data of each row
+while($row = mysqli_fetch_assoc($result)) {
+    if($row["student_matrix"] == $username && $row["student_password"] == $_POST['password2']){
+
+        $false="true";
+       // exit();
+
+    }
+    //echo "true";
+    //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+    //echo "tryue";
+}
+} else {
+    $false="false";
+
+
+//echo "0 results";
+}
+
+}
+if($false=="true"){
+    header("Location:index.html");
+    exit();
+}
+
+?><html class="fontawesome-i2svg-active fontawesome-i2svg-complete" lang="en"><head>
         <title>UPM-ID</title>
         <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
@@ -18,8 +69,10 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css">
         <!-- Third party plugin CSS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet">
-        <!-- Core theme CSS (includes Bootstrap)-->\
-        <link href="sso/styles.css" rel="stylesheet"></head>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="sso/styles.css" rel="stylesheet">
+ 
+    </head>
     <body id="page-top" class="login mdc-typography">
         <script type="text/javascript" src="sso/jquery.min.js"></script>
 <script type="text/javascript" src="sso/es5-shim.js"></script>
@@ -257,8 +310,9 @@
         </div>
         </div>
         <div class="form-wrapper">
-            
-            <form method="post" id="fm1" action="function/verify_login.php">
+
+    
+            <form method="post" id="fm1" action="">
                 <span id="login-form-controls">
                     <div style="width: 100%; overflow: hidden;">
                         <div class="qr-login-mobile">
@@ -276,7 +330,8 @@
                         <div class="d-flex">
 
                             <label for="username" class="mdc-text-field mdc-text-field--outlined">
-                                <input class="mdc-text-field__input" id="username" size="25" type="text" accesskey="u" autocapitalize="none" spellcheck="false" autocomplete="username" name="username" value=""><span class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                <input class="mdc-text-field__input" id="username" size="25" type="text" accesskey="u" autocapitalize="none" spellcheck="false" autocomplete="username" name="username" value="">
+                                <span class="mdc-notched-outline mdc-notched-outline--upgraded">
                                     <span class="mdc-notched-outline__leading"></span>
                                     <span class="mdc-notched-outline__notch" style="">
                                       <span class="mdc-floating-label" style=""><span class="accesskey">U</span>PM-ID Username:</span>
@@ -307,7 +362,9 @@
 
                                 <label for="password" class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
 
-                                    <input class="mdc-text-field__input pwd" type="password" id="password" size="25" accesskey="p" autocomplete="off" name="password" value=""><span class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                    <input class="mdc-text-field__input pwd" type="password" id="password" size="25" accesskey="p" 
+                                    autocomplete="off" name="password2" value="">
+                                    <span class="mdc-notched-outline mdc-notched-outline--upgraded">
                                             <span class="mdc-notched-outline__leading"></span>
                                             <span class="mdc-notched-outline__notch">
                                               <span class="mdc-floating-label" style=""><span class="accesskey">P</span>assword:</span>
@@ -339,6 +396,16 @@
 
                     <div>
 
+                <?php
+
+                if($false =="false"){
+
+                        echo '<div class="alert alert-warning" role="alert">
+                  Invalid Username and Password.
+                      </div>';
+                }else{}
+
+                ?>
         <button class="mdc-button mdc-button--raised" name="submit" accesskey="l" type="submit" value="Login">
             <span class="mdc-button__label">Login</span>
         </button>
