@@ -1,4 +1,16 @@
-﻿<html dir="ltr" lang="en" xml:lang="en" class="yui3-js-enabled">
+﻿ <?php
+  
+// Include the qrlib file
+include 'phpqrcode/qrlib.php';
+  
+// $text variable has data for QR 
+$text = "GEEKS FOR GEEKS";
+  
+// QR Code generation using png()
+// When this function has only the
+// text parameter it directly
+// outputs QR in the browser
+?><html dir="ltr" lang="en" xml:lang="en" class="yui3-js-enabled">
 <head>
     <title>Dashboard</title>
     <link rel="shortcut icon" href="http://putrablastdk.upm.edu.my/theme/image.php/klassroom/theme/1668789993/favicon">
@@ -939,6 +951,7 @@ document.body.className += ' jsenabled';
                 top:50%;
                 right: 2px;
                 z-index:1;
+                background-color:blue;
               }
               </style>
               <script>
@@ -965,9 +978,34 @@ document.body.className += ' jsenabled';
       <span class="glyphicon glyphicon-qrcode"></span> Attendance QRcode
     </button>
 
-    <div id="mybutton2">
+    <div id="mybutton2" style="background-color:blue">
+    <?php
+// Include the qrlib file
+//include 'phpqrcode/qrlib.php';
+$text = "GEEKS FOR GEEKS";
+  
+// $path variable store the location where to 
+// store image and $file creates directory name
+// of the QR code file by using 'uniqid'
+// uniqid creates unique id based on microtime
+$path = 'images/';
+$file = $path.uniqid().".png";
+  
+// $ecc stores error correction capability('L')
+$ecc = 'L';
+$pixel_Size = 5;
+//$frame_Size = 5;
+  
+// Generates QR Code and Stores it in directory given
+//QRcode::png($text, $file, $ecc, $pixel_Size, $frame_size);
+QRcode::png($text, $file, $ecc, $pixel_Size);
+// Displaying the stored QR code from directory
+//echo "<img src='".$file."'>";
+?>
+
         <p>Lecturer Name:</p>
         <p>subject Name:</p>
+        <img src="<?php echo $file; ?>" style="float:left">
     </div>
 
 <!-- The Modal -->

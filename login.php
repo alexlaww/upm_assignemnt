@@ -45,7 +45,7 @@ while($row = mysqli_fetch_assoc($result)) {
 
 }
 if($false=="true"){
-    header("Location:index.html");
+    header("Location:index.php");
     exit();
 }
 
