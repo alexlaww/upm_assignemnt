@@ -29,12 +29,13 @@ while($row = mysqli_fetch_assoc($result)) {
     if($row["student_matrix"] == $username && $row["student_password"] == $_POST['password2']){
 
         $false="true";
+
+        $cookie_name = "user";
+        $cookie_value = $username;
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
        // exit();
 
     }
-    //echo "true";
-    //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-    //echo "tryue";
 }
 } else {
     $false="false";

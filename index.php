@@ -982,7 +982,7 @@ document.body.className += ' jsenabled';
     <?php
 // Include the qrlib file
 //include 'phpqrcode/qrlib.php';
-$text = "GEEKS FOR GEEKS";
+$text = "attendance_record.php";
   
 // $path variable store the location where to 
 // store image and $file creates directory name
@@ -1001,10 +1001,45 @@ $pixel_Size = 5;
 QRcode::png($text, $file, $ecc, $pixel_Size);
 // Displaying the stored QR code from directory
 //echo "<img src='".$file."'>";
-?>
 
-        <p>Lecturer Name:</p>
-        <p>subject Name:</p>
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "putrablast_attendance";
+$false="";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+$sql = "SELECT * FROM student_enroll WHERE student_matrix='".$_COOKIE['user']."'";
+
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        $subject_name = $row['subject_name'];
+        $subject_code = $row['subject_name_code'];
+    }
+
+}   
+
+
+    $sql2 = "SELECT * FROM qr_code WHERE subject_name_code='".$subject_code."'";
+    $result2 = mysqli_query($conn, $sql2);
+
+    if (mysqli_num_rows($result2) > 0) {
+        while($row2 = mysqli_fetch_assoc($result2)) {
+          $lecturer_matrix = $row2['lecturer_id'];
+          $start_time =$row2['start_time'];
+          $end_time =$row2['end_time'];
+        }
+    }
+?>
+<div style="background-color:white;margin-right:30px">
+<p>Time: <?php echo $start_time.'-'.$end_time;?></p>
+
+    </p>
+        <p>Subject Code & Name:<br><?php echo $subject_code." ".$subject_name;?></p>
+</div>
         <img src="<?php echo $file; ?>" style="float:left">
     </div>
 
