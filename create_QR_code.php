@@ -275,14 +275,8 @@ document.body.className += ' jsenabled';
 
 
                   </form>
-
-
-
-
-
                   </div>
-                      
-                                                <br>
+                             <br>
                         
                   
                </section>
